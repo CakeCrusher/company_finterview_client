@@ -260,6 +260,16 @@ const AppContent: React.FC = () => {
     });
   };
 
+  const handleDeleteInterview = async (interview: Interview) => {
+    console.log('Deleting interview:', interview);
+    const { error } = await supabase
+      .from('interviews')
+      .delete()
+      .eq('id', interview.id);
+    if (error) console.error('Error deleting interview:', error);
+    setInterviews(prev => prev.filter(i => i.id !== interview.id));
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 flex items-center justify-center">
@@ -278,6 +288,7 @@ const AppContent: React.FC = () => {
         interview={appState.editingInterview}
         onSave={handleSaveInterview}
         onBack={handleBackToDashboard}
+        onDelete={handleDeleteInterview}
       />
     );
   }

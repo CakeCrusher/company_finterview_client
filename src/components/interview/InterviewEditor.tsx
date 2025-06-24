@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Save, Users, Settings, ArrowLeft, Eye } from 'lucide-react';
+import { Save, Users, Settings, ArrowLeft, Eye, Trash2 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
@@ -13,13 +13,15 @@ import { Interview, Task, Criterion } from '../../types';
 interface InterviewEditorProps {
   interview: Interview;
   onSave: (interview: Interview) => void;
+  onDelete: (interview: Interview) => void;
   onBack: () => void;
 }
 
 export const InterviewEditor: React.FC<InterviewEditorProps> = ({
   interview: initialInterview,
   onSave,
-  onBack
+  onBack,
+  onDelete,
 }) => {
   const [interview, setInterview] = useState<Interview>(initialInterview);
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(
@@ -109,6 +111,10 @@ export const InterviewEditor: React.FC<InterviewEditorProps> = ({
     setHasUnsavedChanges(false);
     setIsInviteModalOpen(true);
   }, [interview, onSave]);
+
+  const handleDelete = useCallback(() => {
+    onDelete(interview);
+  }, [onDelete, interview]);
 
   const getStatusVariant = (status: string) => {
     switch (status) {
@@ -214,6 +220,16 @@ export const InterviewEditor: React.FC<InterviewEditorProps> = ({
                   View Results
                 </Button>
               )}
+
+              <div className="w-px h-6 bg-gray-300" />
+
+              <Button
+                variant="danger"
+                icon={Trash2}
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
             </div>
           </div>
         </div>
