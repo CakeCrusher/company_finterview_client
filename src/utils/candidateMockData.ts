@@ -124,13 +124,96 @@ export const mockCandidateResults: CandidateResult[] = [
 ];
 
 export const mockPerformanceData: CandidatePerformanceData = {
-  candidates: mockCandidateResults,
+  candidates: [
+    {
+      id: '1',
+      name: 'Catherine Thompson',
+      email: 'catherine.thompson@email.com',
+      completedAt: '2024-01-15T10:30:00Z',
+      overallScore: 4.2,
+      scores: [
+        // Task 1 - Assistant scores (Financial Statements)
+        { criterionId: 'income_statement_accuracy', criterionName: 'Income Statement Accuracy', score: 4 },
+        { criterionId: 'cash_flow_accuracy', criterionName: 'Cash Flow Accuracy', score: 4 },
+        { criterionId: 'balance_sheet_accuracy', criterionName: 'Balance Sheet Accuracy', score: 3 },
+        { criterionId: 'cheating_suspected', criterionName: 'Cheating Suspected', score: false },
+        { criterionId: 'general_feedback_task1', criterionName: 'General Feedback (Task 1)', score: 'Excellent understanding of financial statement interconnections. Applied tax shield correctly and showed strong analytical skills.' },
+        
+        // Task 2 - Assistant2 scores (Valuation)
+        { criterionId: 'prompt_for_share_price', criterionName: 'Prompt for Share Price', score: 2 },
+        { criterionId: 'equity_value_calculation', criterionName: 'Equity Value Calculation', score: 2 },
+        { criterionId: 'ev_subtract_cash', criterionName: 'EV Subtract Cash', score: 1 },
+        { criterionId: 'ev_add_debt', criterionName: 'EV Add Debt', score: 1 },
+        { criterionId: 'ev_add_preferred_stock', criterionName: 'EV Add Preferred Stock', score: 1 },
+        { criterionId: 'ev_formula_structure', criterionName: 'EV Formula Structure', score: 2 },
+        { criterionId: 'ev_sign_penalties', criterionName: 'EV Sign Penalties', score: 0 },
+        { criterionId: 'logical_flow_and_clarity', criterionName: 'Logical Flow and Clarity', score: 2 },
+        { criterionId: 'communication_and_composure', criterionName: 'Communication and Composure', score: 1 },
+        { criterionId: 'general_feedback_task2', criterionName: 'General Feedback (Task 2)', score: 'Strong valuation fundamentals. Asked appropriate questions and executed calculations methodically with clear reasoning.' }
+      ],
+      notes: [
+        {
+          author: 'System',
+          column: 'general_feedback_task1',
+          content: 'Excellent understanding of financial statement interconnections. Applied tax shield correctly and showed strong analytical skills.',
+          createdAt: '2024-01-15T10:45:00Z'
+        }
+      ]
+    },
+    {
+      id: '2', 
+      name: 'Sebastian Rodriguez',
+      email: 'sebastian.rodriguez@email.com',
+      completedAt: '2024-01-15T11:00:00Z',
+      overallScore: 1.3,
+      scores: [
+        // Task 1 - Assistant scores (Financial Statements)
+        { criterionId: 'income_statement_accuracy', criterionName: 'Income Statement Accuracy', score: 1 },
+        { criterionId: 'cash_flow_accuracy', criterionName: 'Cash Flow Accuracy', score: 0 },
+        { criterionId: 'balance_sheet_accuracy', criterionName: 'Balance Sheet Accuracy', score: 1 },
+        { criterionId: 'cheating_suspected', criterionName: 'Cheating Suspected', score: false },
+        { criterionId: 'general_feedback_task1', criterionName: 'General Feedback (Task 1)', score: 'Struggled with basic financial statement concepts. Did not understand tax implications or cash flow impacts. Needs significant improvement.' },
+        
+        // Task 2 - Assistant2 scores (Valuation)
+        { criterionId: 'prompt_for_share_price', criterionName: 'Prompt for Share Price', score: 0 },
+        { criterionId: 'equity_value_calculation', criterionName: 'Equity Value Calculation', score: 0 },
+        { criterionId: 'ev_subtract_cash', criterionName: 'EV Subtract Cash', score: 0 },
+        { criterionId: 'ev_add_debt', criterionName: 'EV Add Debt', score: 0 },
+        { criterionId: 'ev_add_preferred_stock', criterionName: 'EV Add Preferred Stock', score: 0 },
+        { criterionId: 'ev_formula_structure', criterionName: 'EV Formula Structure', score: 0 },
+        { criterionId: 'ev_sign_penalties', criterionName: 'EV Sign Penalties', score: 3 },
+        { criterionId: 'logical_flow_and_clarity', criterionName: 'Logical Flow and Clarity', score: 0 },
+        { criterionId: 'communication_and_composure', criterionName: 'Communication and Composure', score: 0 },
+        { criterionId: 'general_feedback_task2', criterionName: 'General Feedback (Task 2)', score: 'Poor understanding of valuation concepts. Made multiple sign errors and did not ask for required information. Needs fundamental training.' }
+      ],
+      notes: [
+        {
+          author: 'System',
+          column: 'general_feedback_task1', 
+          content: 'Struggled with basic financial statement concepts. Did not understand tax implications or cash flow impacts. Needs significant improvement.',
+          createdAt: '2024-01-15T11:15:00Z'
+        }
+      ]
+    }
+  ],
   criteriaColumns: [
-    { id: 'comm-general', name: 'Communication.general', type: 'rating', scope: 'general' },
-    { id: 'prof-general', name: 'Professionalism.general', type: 'rating', scope: 'general' },
-    { id: 'depth-task1', name: 'Depth of Answer.task1', type: 'rating', scope: 'task', taskName: 'Behavioral Questions' },
-    { id: 'clarity-task1', name: 'Clarity.task1', type: 'rating', scope: 'task', taskName: 'Behavioral Questions' },
-    { id: 'excel-task2', name: 'Excel Cleanliness.task2', type: 'rating', scope: 'task', taskName: 'Merger Math' },
-    { id: 'calc-task2', name: 'Calculation Accuracy.task2', type: 'rating', scope: 'task', taskName: 'Merger Math' }
+    // Task 1 - Financial Statements Analysis
+    { id: 'income_statement_accuracy', name: 'Income Statement Accuracy', type: 'numeric', scope: 'task', taskName: 'Financial Statements Impact' },
+    { id: 'cash_flow_accuracy', name: 'Cash Flow Accuracy', type: 'numeric', scope: 'task', taskName: 'Financial Statements Impact' },
+    { id: 'balance_sheet_accuracy', name: 'Balance Sheet Accuracy', type: 'numeric', scope: 'task', taskName: 'Financial Statements Impact' },
+    { id: 'cheating_suspected', name: 'Cheating Suspected', type: 'boolean', scope: 'task', taskName: 'Financial Statements Impact' },
+    { id: 'general_feedback_task1', name: 'General Feedback (Task 1)', type: 'text', scope: 'task', taskName: 'Financial Statements Impact' },
+    
+    // Task 2 - Valuation Analysis  
+    { id: 'prompt_for_share_price', name: 'Prompt for Share Price', type: 'numeric', scope: 'task', taskName: 'Company Valuation' },
+    { id: 'equity_value_calculation', name: 'Equity Value Calculation', type: 'numeric', scope: 'task', taskName: 'Company Valuation' },
+    { id: 'ev_subtract_cash', name: 'EV Subtract Cash', type: 'numeric', scope: 'task', taskName: 'Company Valuation' },
+    { id: 'ev_add_debt', name: 'EV Add Debt', type: 'numeric', scope: 'task', taskName: 'Company Valuation' },
+    { id: 'ev_add_preferred_stock', name: 'EV Add Preferred Stock', type: 'numeric', scope: 'task', taskName: 'Company Valuation' },
+    { id: 'ev_formula_structure', name: 'EV Formula Structure', type: 'numeric', scope: 'task', taskName: 'Company Valuation' },
+    { id: 'ev_sign_penalties', name: 'EV Sign Penalties', type: 'numeric', scope: 'task', taskName: 'Company Valuation' },
+    { id: 'logical_flow_and_clarity', name: 'Logical Flow and Clarity', type: 'numeric', scope: 'task', taskName: 'Company Valuation' },
+    { id: 'communication_and_composure', name: 'Communication and Composure', type: 'numeric', scope: 'task', taskName: 'Company Valuation' },
+    { id: 'general_feedback_task2', name: 'General Feedback (Task 2)', type: 'text', scope: 'task', taskName: 'Company Valuation' }
   ]
 };
