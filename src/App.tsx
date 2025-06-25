@@ -29,6 +29,55 @@ const AppContent: React.FC = () => {
     const fetchInterviews = async () => {
       if (!user) return;
       setIsFetching(true);
+      
+      // Add mock interview with completed candidates for testing results view
+      const mockInterviewWithResults: Interview = {
+        id: 'mock-results-interview',
+        title: 'BlackRock Finance Interview',
+        status: 'closed',
+        created_at: '2024-01-10T10:00:00Z',
+        updated_at: '2024-01-15T12:00:00Z',
+        owner_email: user.email,
+        stats: {
+          invited: 5,
+          completed: 2,
+          graded: 2
+        },
+        generalCriteria: [],
+        tasks: [
+          {
+            id: 'task-1',
+            interview_id: 'mock-results-interview',
+            title: 'Financial Statements Impact',
+            prompt: 'Walk me through the impact of a $10 increase in depreciation on the three financial statements',
+            ai_behavior: 'neutral',
+            duration_minutes: 15,
+            req_audio: true,
+            req_screen_share: false,
+            req_webcam: true,
+            req_file_upload: false,
+            task_order: 1,
+            supportingFiles: [],
+            criteria: []
+          },
+          {
+            id: 'task-2', 
+            interview_id: 'mock-results-interview',
+            title: 'Company Valuation',
+            prompt: 'Find the equity value and enterprise value of this company',
+            ai_behavior: 'neutral',
+            duration_minutes: 20,
+            req_audio: true,
+            req_screen_share: false,
+            req_webcam: true,
+            req_file_upload: false,
+            task_order: 2,
+            supportingFiles: [],
+            criteria: []
+          }
+        ]
+      };
+      
       const { data, error } = await supabase
         .from('interviews')
         .select('*, tasks(*, criteria(*)), generalCriteria:criteria!interview_id(*)')
@@ -46,7 +95,9 @@ const AppContent: React.FC = () => {
           })),
           generalCriteria: i.generalCriteria || [],
         }));
-        setInterviews(completeInterviews as Interview[]);
+        
+        // Add the mock interview to the beginning of the list
+        setInterviews([mockInterviewWithResults, ...completeInterviews as Interview[]]);
       }
       setIsFetching(false);
     };
